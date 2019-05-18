@@ -1,32 +1,18 @@
 <template>
   <section>
     <TheHeader></TheHeader>
-    <ListView :tweets="showPosts"></ListView>
   </section>
 </template>
 
 <script>
-  import TheHeader from '~/components/TheHeader.vue'
-  import ListView from '~/components/ListView.vue'
-  import {mapGetters, mapActions} from 'vuex'
+  import TheHeader from "~/components/TheHeader.vue"
 
   export default {
     components: {
-      TheHeader,
-      ListView
+      TheHeader
     },
-    name: "index",
     async asyncData(context) {
-      await context.store.dispatch("posts/fetchPosts")
-    },
-    computed: {
-      showPosts() {
-        return this.posts
-      },
-      ...mapGetters('posts', ['posts'])
-    },
-    methods: {
-      ...mapActions('posts', ['fetchPosts'])
+      context.redirect("/posts/");
     }
   }
 </script>

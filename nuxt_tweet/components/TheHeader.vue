@@ -1,10 +1,7 @@
 <template>
   <section>
-    <nuxt-link :to="`/`">
+    <nuxt-link to="/posts/">
       投稿一覧
-    </nuxt-link>
-    <nuxt-link :to="`/Add`">
-      追加
     </nuxt-link>
   </section>
 </template>

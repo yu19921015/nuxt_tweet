@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import ListItem from './ListItem'
+  import ListItem from "./ListItem"
 
   export default {
     name: "ListView",
