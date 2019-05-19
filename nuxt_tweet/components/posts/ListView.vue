@@ -1,7 +1,7 @@
 <template>
   <section>
     <div>
-      <ListItem v-for="post in posts" :post="post"></ListItem>
+      <ListItem v-for="post in posts" :post="post" :key="post.id"></ListItem>
     </div>
   </section>
 </template>
@@ -19,3 +19,7 @@
     }
   }
 </script>
+
+<style>
+
+</style>

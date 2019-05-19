@@ -1,6 +1,6 @@
 <template>
   <section class="listItem">
-    <div class="listItem_post">
+    <div class="list-item__post">
       <div><span>title</span>: <span>{{post.title}}</span></div>
       <div><span>content</span>: <span>{{post.content}}</span></div>
     </div>
@@ -17,7 +17,7 @@
 </script>
 
 <style>
-  .listItem_post {
+  .list-item__post {
     border: solid black 2px;
     margin-bottom: 2px;
   }
