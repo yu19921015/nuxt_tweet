@@ -1,5 +1,5 @@
 <template>
-  <section class="listItem">
+  <section class="list-item">
     <div class="list-item__post">
       <div><span>title</span>: <span>{{post.title}}</span></div>
       <div><span>content</span>: <span>{{post.content}}</span></div>
