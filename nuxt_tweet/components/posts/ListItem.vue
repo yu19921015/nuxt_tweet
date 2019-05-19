@@ -1,8 +1,8 @@
 <template>
   <section class="listItem">
-    <div class="listItem_tweet">
-      <div><span>title</span>: <span>{{tweet.title}}</span></div>
-      <div><span>content</span>: <span>{{tweet.content}}</span></div>
+    <div class="listItem_post">
+      <div><span>title</span>: <span>{{post.title}}</span></div>
+      <div><span>content</span>: <span>{{post.content}}</span></div>
     </div>
   </section>
 </template>
@@ -11,14 +11,13 @@
   export default {
     name: "ListItem",
     props: {
-      tweet: Object,
-      edit: Boolean
+      post: Object
     }
   }
 </script>
 
 <style>
-  .listItem_tweet {
+  .listItem_post {
     border: solid black 2px;
     margin-bottom: 2px;
   }

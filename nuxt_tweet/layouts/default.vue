@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TheHeader></TheHeader>
     <nuxt />
   </div>
 </template>
@@ -53,3 +54,13 @@ html {
   background-color: #35495e;
 }
 </style>
+
+<script>
+  import TheHeader from '~/components/TheHeader.vue'
+
+  export default {
+    components: {
+      TheHeader
+    }
+  }
+</script>
