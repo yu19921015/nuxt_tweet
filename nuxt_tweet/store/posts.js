@@ -10,6 +10,9 @@ export const mutations = {
   clearPosts(state) {
     state.posts = []
   },
+  addPost(state, post){
+    state.posts.push(post)
+  },
   addPosts(state, postArray) {
     state.posts.push(...postArray)
   }
@@ -23,5 +26,13 @@ export const actions = {
     });
     commit("clearPosts");
     commit("addPosts", postArray);
+  },
+  async createPost({commit}, {payload}) {
+    const postId = (await this.$axios.$post("/posts.json", {payload})).name;
+    const post = {id: postId, ...payload};
+    // console.log(post)
+    // debugger
+    await this.$axios.$put(`/posts/${postId}.json`, post);
+    commit("addPost", post);
   }
 }
