@@ -30,8 +30,6 @@ export const actions = {
   async createPost({commit}, {payload}) {
     const postId = (await this.$axios.$post("/posts.json", {payload})).name;
     const post = {id: postId, ...payload};
-    // console.log(post)
-    // debugger
     await this.$axios.$put(`/posts/${postId}.json`, post);
     commit("addPost", post);
   }

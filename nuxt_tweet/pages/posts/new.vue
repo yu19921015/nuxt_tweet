@@ -3,9 +3,8 @@
     <form>
       <label>タイトル：<input type="text" v-model="newPost.title"></label>
       <label>内容：<input type="text" v-model="newPost.content"></label>
-      <button type="submit" value="投稿">toukou</button>
+      <button type="submit" value="投稿" @click.prevent="submit">投稿</button>
     </form>
-<!--    <button @click="submit">投稿</button>-->
   </section>
 </template>
 
@@ -23,11 +22,9 @@
       }
     },
     methods: {
-      submit() {
+      async submit() {
         const payload = {...this.newPost};
-        // console.log(payload)
-        // debugger
-        this.createPost({payload});
+        await this.createPost({payload});
         this.$router.push("/posts/");
       },
       ...mapActions("posts", ["createPost"])
