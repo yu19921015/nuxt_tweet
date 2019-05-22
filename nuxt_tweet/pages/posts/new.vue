@@ -23,8 +23,8 @@
     },
     methods: {
       async submit() {
+        const payload = {...this.newPost};
         try {
-          const payload = {...this.newPost};
           await this.createPost({payload});
           this.$router.push("/posts/");
         } catch (error) {
