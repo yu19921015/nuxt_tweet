@@ -8,13 +8,22 @@ export const getters = {
 
 export const mutations = {
   clearPosts(state) {
-    state.posts = []
+    state.posts = [];
   },
-  addPost(state, post){
-    state.posts.push(post)
+  addPost(state, post) {
+    state.posts.push(post);
   },
   addPosts(state, postArray) {
-    state.posts.push(...postArray)
+    state.posts.push(...postArray);
+  },
+  modifyPost(state, post) {
+    let indexNo;
+    state.posts.forEach((p, index) => {
+      if(p.id === post.id) {
+        indexNo = index;
+      }
+    })
+    state.posts[indexNo] = post;
   }
 };
 
@@ -32,5 +41,11 @@ export const actions = {
     const post = {id: postId, ...payload};
     await this.$axios.$put(`/posts/${postId}.json`, post);
     commit("addPost", post);
+  },
+  async modifyPost({commit}, {payload}) {
+    const post = {...payload};
+    const postId = post.id;
+    await this.$axios.$put(`/posts/${postId}.json`, post);
+    commit("modifyPost", post);
   }
-}
+};
