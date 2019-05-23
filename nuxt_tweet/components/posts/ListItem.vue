@@ -14,11 +14,6 @@
     props: {
       post: Object
     },
-    data() {
-      return {
-        isSelected: false
-      }
-    },
     methods: {
       edit() {
         this.$router.push({name: "posts-edit", params: {...this.post}})
