@@ -16,10 +16,10 @@ export const mutations = {
   addPosts(state, postArray) {
     state.posts.push(...postArray);
   },
-  modifyPost(state, post) {
+  updatePost(state, post) {
     let indexNo;
     state.posts.forEach((p, index) => {
-      if(p.id === post.id) {
+      if (p.id === post.id) {
         indexNo = index;
       }
     })
@@ -28,6 +28,9 @@ export const mutations = {
 };
 
 export const actions = {
+  async fetchPost({commit}, postId) {
+    return await this.$axios.$get(`/posts/${postId}.json`);
+  },
   async fetchPosts({commit}) {
     const posts = await this.$axios.$get("/posts.json");
     const postArray = Object.entries(posts).map(post => {
@@ -42,10 +45,16 @@ export const actions = {
     await this.$axios.$put(`/posts/${postId}.json`, post);
     commit("addPost", post);
   },
-  async modifyPost({commit}, {payload}) {
-    const post = {...payload};
-    const postId = post.id;
-    await this.$axios.$put(`/posts/${postId}.json`, post);
-    commit("modifyPost", post);
+  async updatePost({commit}, {payload}) {
+    const editingPost = {...payload.editingPost};
+    const previousPost = {...payload.previousPost};
+    const postId = editingPost.id;
+    const presentPost = await this.$axios.$get(`/posts/${postId}.json`);
+    if (presentPost.title === previousPost.title && presentPost.content === previousPost.content) {
+      await this.$axios.$put(`/posts/${postId}.json`, editingPost);
+      commit("updatePost", editingPost);
+    } else {
+      console.log("投稿がすでに編集されていたため、更新できませんでした。");
+    }
   }
 };

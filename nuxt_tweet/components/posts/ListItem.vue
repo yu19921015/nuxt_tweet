@@ -16,7 +16,7 @@
     },
     methods: {
       edit() {
-        this.$router.push({name: "posts-edit", params: {...this.post}})
+        this.$router.push({name: `posts-edit-id`, params: {id: this.post.id}})
       }
     }
   }
@@ -36,7 +36,7 @@
     display: block;
   }
 
-  .button.is-primary.is-small.list-item__edit-button {
+  .is-primary.list-item__edit-button {
     color: #000;
   }
 </style>
