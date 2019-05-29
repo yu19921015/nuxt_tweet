@@ -17,13 +17,13 @@ export const mutations = {
     state.posts.push(...postArray);
   },
   updatePost(state, post) {
-    let indexNo;
-    state.posts.forEach((p, index) => {
+    let index;
+    state.posts.forEach((p, i) => {
       if (p.id === post.id) {
-        indexNo = index;
+        index = i;
       }
-    })
-    state.posts[indexNo] = post;
+    });
+    state.posts[index] = post;
   }
 };
 
@@ -46,15 +46,8 @@ export const actions = {
     commit("addPost", post);
   },
   async updatePost({commit}, {payload}) {
-    const editingPost = {...payload.editingPost};
-    const previousPost = {...payload.previousPost};
-    const postId = editingPost.id;
-    const presentPost = await this.$axios.$get(`/posts/${postId}.json`);
-    if (presentPost.title === previousPost.title && presentPost.content === previousPost.content) {
-      await this.$axios.$put(`/posts/${postId}.json`, editingPost);
-      commit("updatePost", editingPost);
-    } else {
-      console.log("投稿がすでに編集されていたため、更新できませんでした。");
-    }
+    const editingPost = {...payload};
+    await this.$axios.$put(`/posts/${editingPost.id}.json`, editingPost);
+    commit("updatePost", editingPost);
   }
 };

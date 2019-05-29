@@ -3,7 +3,9 @@
     <div class="list-item__post">
       <div><span>title</span>: <span>{{post.title}}</span></div>
       <div><span>content</span>: <span>{{post.content}}</span></div>
-      <button class="button is-primary is-small list-item__edit-button" @click="edit">編集</button>
+      <nuxt-link :to="`/posts/${this.post.id}/edit`">
+        <button class="button is-primary is-small list-item__edit-button">編集</button>
+      </nuxt-link>
     </div>
   </section>
 </template>
@@ -13,11 +15,6 @@
     name: "ListItem",
     props: {
       post: Object
-    },
-    methods: {
-      edit() {
-        this.$router.push({name: `posts-edit-id`, params: {id: this.post.id}})
-      }
     }
   }
 </script>
