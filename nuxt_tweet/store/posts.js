@@ -8,17 +8,23 @@ export const getters = {
 
 export const mutations = {
   clearPosts(state) {
-    state.posts = []
+    state.posts = [];
   },
-  addPost(state, post){
-    state.posts.push(post)
+  addPost(state, post) {
+    state.posts.push(post);
   },
   addPosts(state, postArray) {
-    state.posts.push(...postArray)
+    state.posts.push(...postArray);
+  },
+  updatePostByIndex(state, index, post) {
+    state.posts[index] = post;
   }
 };
 
 export const actions = {
+  async fetchPost({commit}, postId) {
+    return await this.$axios.$get(`/posts/${postId}.json`);
+  },
   async fetchPosts({commit}) {
     const posts = await this.$axios.$get("/posts.json");
     const postArray = Object.entries(posts).map(post => {
@@ -32,5 +38,11 @@ export const actions = {
     const post = {id: postId, ...payload};
     await this.$axios.$put(`/posts/${postId}.json`, post);
     commit("addPost", post);
+  },
+  async updatePost({commit}, {payload}) {
+    const index = payload.index;
+    const editingPost = {...payload.post};
+    await this.$axios.$put(`/posts/${editingPost.id}.json`, editingPost);
+    commit("updatePostByIndex", index, editingPost);
   }
-}
+};

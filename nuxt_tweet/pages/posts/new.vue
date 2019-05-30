@@ -33,7 +33,7 @@
       },
       ...mapActions("posts", ["createPost"])
     }
-  }
+  };
 </script>
 
 <style>
