@@ -9,24 +9,31 @@
 </template>
 
 <script>
-  import {mapActions} from "vuex"
-  import axios from "axios"
+  import {mapGetters, mapActions} from "vuex"
 
   export default {
     name: "edit",
-    async asyncData({route}) {
-      const post = await axios.get(`https://nuxt-tweet-d26d6.firebaseio.com/posts/${route.params.id}.json`);
+    async asyncData({route, store}) {
+      const post = await store.dispatch("posts/fetchPost", route.params.id);
       return {
-        editingPost: {...post.data},
-        previousPost: {...post.data}
+        editingPost: {...post},
+        previousPost: {...post}
       }
+    },
+    computed: {
+      ...mapGetters("posts", ["posts"])
     },
     methods: {
       async save() {
         if (this.isNotPostAlreadyChanged()) {
           try {
-            const payload = {...this.editingPost};
-            await this.updatePost({payload});
+            let index;
+            this.posts.forEach((p, i) => {
+              if (p.id === this.editingPost.id) {
+                index = i;
+              }
+            });
+            await this.updatePost({payload: {index: index, post:{...this.editingPost}}});
             this.$router.push("/posts/");
           } catch (error) {
             console.log(error.message);
@@ -37,7 +44,7 @@
       },
       async isNotPostAlreadyChanged() {
         const postId = this.editingPost.id;
-        const presentPost = await this.$axios.$get(`/posts/${postId}.json`);
+        const presentPost = await this.fetchPost(postId);
         return presentPost.title === this.previousPost.title && presentPost.content === this.previousPost.content;
       },
       ...mapActions("posts", ["updatePost", "fetchPost"])

@@ -16,13 +16,7 @@ export const mutations = {
   addPosts(state, postArray) {
     state.posts.push(...postArray);
   },
-  updatePost(state, post) {
-    let index;
-    state.posts.forEach((p, i) => {
-      if (p.id === post.id) {
-        index = i;
-      }
-    });
+  updatePostByIndex(state, index, post) {
     state.posts[index] = post;
   }
 };
@@ -46,8 +40,9 @@ export const actions = {
     commit("addPost", post);
   },
   async updatePost({commit}, {payload}) {
-    const editingPost = {...payload};
+    const index = payload.index;
+    const editingPost = {...payload.post};
     await this.$axios.$put(`/posts/${editingPost.id}.json`, editingPost);
-    commit("updatePost", editingPost);
+    commit("updatePostByIndex", index, editingPost);
   }
 };
